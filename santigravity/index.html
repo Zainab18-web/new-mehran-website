@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehran Gift Items And Decor Shop</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for Modern Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="scroll-progress" id="scroll-progress"></div>
+    <div class="custom-cursor" id="custom-cursor"></div>
+    <div class="background-3d"></div>
+    <div id="cute-floating-container" class="cute-floating-container"></div>
+    <div id="notification-container" class="notification-container"></div>
+
+    <header class="glass-header">
+        <div class="logo">
+            <h1>Mehran Gift</h1>
+        </div>
+        <nav class="main-nav">
+            <button class="nav-btn glow-on-hover active" data-target="home-view">Home</button>
+            <button class="nav-btn glow-on-hover" data-target="products-view">Explore Products</button>
+            <button class="nav-btn glow-on-hover" data-target="about-view">About Us</button>
+            <button class="nav-btn glow-on-hover" data-target="contact-view">Contact Us</button>
+        </nav>
+        <div class="controls">
+            <select id="language-selector" class="futuristic-select"></select>
+            <button id="cart-btn" class="glow-on-hover">
+                🛒 Cart (<span id="cart-count">0</span>)
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <div id="home-view" class="page-view">
+            <section class="hero-section glass-panel">
+                <h2 class="shadow-text holo-text">Welcome to Mehran Gifts</h2>
+                <p>Welcome to our online store. Click on "Explore Products" above to dive into our exclusive collection of gifts and home decor.</p>
+            </section>
+
+            <!-- Order Tracking Section -->
+            <div id="client-order-tracking" class="glass-panel hidden" style="margin: 2rem 5%; padding: 2rem; border-radius: 20px; text-align: left;">
+                <h3 class="holo-text" style="margin-bottom: 1.5rem; text-align: center; font-size: 1.6rem;">📦 Track Your Active Order</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 450px; margin: 0 auto;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+                        <span>Order ID:</span>
+                        <strong id="tracking-order-id" style="color: #38bdf8; font-size: 0.9rem;">--</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; align-items: center;">
+                        <span>Status:</span>
+                        <span id="tracking-order-status" style="padding: 0.3rem 0.8rem; border-radius: 20px; font-weight: bold; background: rgba(56, 189, 248, 0.2); color: #38bdf8; font-size: 0.9rem;">Pending</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+                        <span>Total Items:</span>
+                        <strong id="tracking-order-items">0</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+                        <span>Total Price:</span>
+                        <strong id="tracking-order-price" style="color: #38bdf8;">Rs 0</strong>
+                    </div>
+                    <p style="font-size: 0.95rem; color: #cbd5e1; text-align: center; margin-top: 0.8rem; line-height: 1.5;">
+                        We will contact you on your mobile number to confirm payment and dispatch details. 
+                    </p>
+                    <button id="clear-tracking-btn" class="glow-on-hover" style="margin-top: 0.5rem; padding: 0.5rem; font-size: 0.85rem; width: 100%;">Clear Tracking Info</button>
+                </div>
+            </div>
+
+            <!-- Website Reviews Section -->
+            <section class="reviews-section">
+                <h2 class="section-title text-center holo-text">Website Reviews</h2>
+                <div id="reviews-grid" class="reviews-grid">
+                    <!-- Reviews will be generated here by JS -->
+                </div>
+
+                <div class="add-review-panel glass-panel">
+                    <h3>Review Our Website</h3>
+                    <form id="review-form">
+                        <div class="input-group">
+                            <label>Your Name</label>
+                            <input type="text" id="review-name" required placeholder="Enter your full name">
+                        </div>
+                        <div class="input-group">
+                            <label>Rating</label>
+                            <select id="review-rating" class="futuristic-select dark-select" required>
+                                <option value="5">⭐⭐⭐⭐⭐ (Excellent)</option>
+                                <option value="4">⭐⭐⭐⭐ (Very Good)</option>
+                                <option value="3">⭐⭐⭐ (Good)</option>
+                                <option value="2">⭐⭐ (Average)</option>
+                                <option value="1">⭐ (Poor)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Your Review</label>
+                            <textarea id="review-text" required placeholder="Share your experience with us..."></textarea>
+                        </div>
+                        <button type="submit" class="glow-on-hover checkout-submit">Submit Review</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <!-- Products Section -->
+        <div id="products-view" class="page-view hidden">
+            <h2 class="section-title text-center holo-text">Explore Our Products</h2>
+            
+            <!-- Filter Bar -->
+            <div class="filter-bar glass-panel">
+                <input type="text" id="product-search" placeholder="Search products..." class="search-input">
+                <div class="category-filters">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="Balloons">🎈 Balloons</button>
+                    <button class="filter-btn" data-category="Birthday Sets">🎁 Sets</button>
+                    <button class="filter-btn" data-category="Candles">🕯️ Candles</button>
+                    <button class="filter-btn" data-category="Cake Toppers">🎂 Toppers</button>
+                    <button class="filter-btn" data-category="Gifts">💝 Gifts</button>
+                    <button class="filter-btn" data-category="Decor & Others">✨ Decor</button>
+                </div>
+            </div>
+
+            <section id="products-grid" class="products-grid"></section>
+        </div>
+        
+        <!-- About Section -->
+        <div id="about-view" class="page-view hidden">
+            <section id="about-us" class="about-section glass-panel">
+                <h2>About Us</h2>
+                <div class="about-content">
+                    <p>Mehran Gifts was founded by <strong>Zainab Sultan</strong> and <strong>Sultan Hussain</strong> with a simple goal: to make gifting and home decorating easier and more beautiful.</p>
+                    <p>We believe in providing high-quality items that bring joy to your special moments. Whether you are looking for a unique present for a loved one or stylish decor for your home, our carefully curated collection has something for everyone. Thank you for choosing Mehran Gifts!</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact Section -->
+        <div id="contact-view" class="page-view hidden">
+            <section class="contact-section glass-panel" style="margin: 4rem 5%; padding: 3rem; border-radius: 20px;">
+                <h2 class="section-title text-center holo-text">Contact Us</h2>
+                <div class="about-content" style="text-align: center; margin-bottom: 2rem;">
+                    <p>We would love to hear from you! Click below to save our number or chat with us on WhatsApp for orders and inquiries.</p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem; align-items: center; max-width: 350px; margin: 0 auto;">
+                    <a href="tel:+923343457568" class="glow-on-hover checkout-submit" style="display: flex; align-items: center; justify-content: center; text-decoration: none; width: 100%; padding: 1rem; font-size: 1.2rem;">
+                        📞 Call Us (+92 334 3457568)
+                    </a>
+                    <a href="https://wa.me/923343457568" target="_blank" class="glow-on-hover checkout-submit" style="display: flex; align-items: center; justify-content: center; text-decoration: none; width: 100%; padding: 1rem; font-size: 1.2rem; background: linear-gradient(45deg, #128C7E, #25D366);">
+                        💬 WhatsApp Us (+92 334 3457568)
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="glass-panel" style="margin: 2rem 5% 4rem; padding: 1.5rem; border-radius: 16px; text-align: center; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.95rem; color: #cbd5e1;">
+        <div>&copy; 2026 Mehran Gifts. Built by Zainab Sultan & Sultan Hussain. All rights reserved.</div>
+        <div>
+            <a href="admin.html" target="_blank" class="glow-on-hover" style="text-decoration: none; padding: 0.4rem 1rem; font-size: 0.85rem; background: linear-gradient(45deg, #c084fc, #6366f1);">
+                ⚙️ Admin Login
+            </a>
+        </div>
+    </footer>
+
+    <!-- Google Translate (Hidden UI for native text conversion) -->
+    <div id="google_translate_element" style="display:none;"></div>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+      }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="cart-modal hidden">
+        <div class="cart-content glass-panel">
+            <button id="close-cart" class="close-btn">✖</button>
+            <h2>Your Cart</h2>
+            <div id="cart-items"></div>
+            <div class="cart-total">Total: <span id="cart-total-price">0</span></div>
+            <button id="checkout-btn" class="glow-on-hover checkout-submit">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal (LUMIÈRE-style redesign) -->
+    <div id="checkout-modal" class="checkout-modal hidden">
+        <div class="checkout-wrapper glass-panel">
+
+            <!-- Close Button -->
+            <button id="close-checkout" class="close-btn">✖</button>
+
+            <!-- Progress Bar -->
+            <nav class="co-progress">
+                <div class="co-step done">
+                    <div class="co-circle">✓</div>
+                    <span>Cart</span>
+                </div>
+                <div class="co-line active"></div>
+                <div class="co-step active">
+                    <div class="co-circle">2</div>
+                    <span>Shipping</span>
+                </div>
+                <div class="co-line"></div>
+                <div class="co-step">
+                    <div class="co-circle">3</div>
+                    <span>Confirm</span>
+                </div>
+            </nav>
+
+            <!-- Two-column layout -->
+            <div class="co-body">
+
+                <!-- LEFT: Shipping Form -->
+                <section class="co-form-col">
+                    <h2 class="co-heading">Shipping Details</h2>
+                    <form id="checkout-form" class="co-form">
+
+                        <div class="input-group">
+                            <label>Full Name</label>
+                            <input type="text" id="checkout-name" required placeholder="Your full name">
+                        </div>
+                        <div class="input-group">
+                            <label>Phone Number</label>
+                            <input type="text" id="checkout-phone" required placeholder="Active mobile number">
+                        </div>
+                        <div class="input-group">
+                            <label>Shipping Address</label>
+                            <textarea id="checkout-address" required placeholder="Street, City, Postal code…" rows="3"></textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label>Payment Method</label>
+                            <select required id="payment-method" class="futuristic-select dark-select">
+                                <option value="easypaisa">💚 EasyPaisa</option>
+                            </select>
+                        </div>
+
+                        <!-- Payment Account Instructions Panel -->
+                        <div id="payment-instructions" class="co-delivery-note" style="margin-top: 1rem; border-color: rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.08);">
+                            <!-- Will be updated dynamically via Javascript -->
+                        </div>
+
+                        <div class="co-delivery-note">
+                            🚚 Delivered via <strong>Bykea / TCS / Leopards</strong>.<br>
+                            <span style="color:#38bdf8;">Delivery charges paid to rider on receipt.</span>
+                        </div>
+
+                        <button type="submit" class="glow-on-hover checkout-submit" id="co-submit-btn">
+                            ✅ Confirm Order &amp; Pay
+                        </button>
+                    </form>
+                </section>
+
+                <!-- RIGHT: Order Summary -->
+                <aside class="co-summary-col">
+                    <h3 class="co-summary-title">Order Summary</h3>
+                    <div id="co-cart-items-list" class="co-items-list"></div>
+
+                    <div class="co-totals">
+                        <div class="co-total-row">
+                            <span>Subtotal</span>
+                            <span id="checkout-subtotal">Rs 0</span>
+                        </div>
+                        <div class="co-total-row">
+                            <span>Delivery</span>
+                            <span style="color:#94a3b8;">Paid to rider</span>
+                        </div>
+                        <div class="co-total-row co-grand-total">
+                            <span>Total</span>
+                            <span id="checkout-total">Rs 0</span>
+                        </div>
+                    </div>
+
+                    <p class="co-secure">🔒 Secure Checkout</p>
+                </aside>
+            </div>
+
+            <!-- Success Screen -->
+            <div id="order-success" class="order-success hidden">
+                <div class="success-icon">✅</div>
+                <h2>Order Placed!</h2>
+                <p>Thank you for shopping with Mehran Gifts. We will contact you on your mobile number for payment confirmation.</p>
+                <button id="close-success" class="glow-on-hover">🛍️ Back to Shop</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image View Modal -->
+    <div id="image-modal" class="image-modal hidden">
+        <div class="image-modal-content glass-panel">
+            <button id="close-image-modal" class="close-btn">✖</button>
+            <img id="modal-full-image" src="" alt="Full Product Image">
+            <h3 id="modal-product-name"></h3>
+        </div>
+    </div>
+
+    <!-- Product Review Modal -->
+    <div id="product-review-modal" class="cart-modal hidden">
+        <div class="cart-content glass-panel">
+            <button id="close-pr-modal" class="close-btn">✖</button>
+            <h2>Write a Review</h2>
+            <p style="margin-bottom:1rem;color:#38bdf8;" id="pr-modal-product-name"></p>
+            <form id="pr-modal-form">
+                <input type="hidden" id="pr-modal-product-id">
+                <div class="input-group">
+                    <label>Your Name</label>
+                    <input type="text" id="pr-modal-name" required placeholder="Enter your name">
+                </div>
+                <div class="input-group">
+                    <label>Rating</label>
+                    <select id="pr-modal-rating" class="futuristic-select dark-select" required>
+                        <option value="5">⭐⭐⭐⭐⭐</option>
+                        <option value="4">⭐⭐⭐⭐</option>
+                        <option value="3">⭐⭐⭐</option>
+                        <option value="2">⭐⭐</option>
+                        <option value="1">⭐</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Review</label>
+                    <textarea id="pr-modal-text" required placeholder="Write your thoughts..."></textarea>
+                </div>
+                <button type="submit" class="glow-on-hover checkout-submit">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Chatbot AI Agent UI -->
+    <div id="ai-chat-container" class="ai-chat-container">
+        <div id="ai-chat-window" class="ai-chat-window glass-panel hidden">
+            <div class="chat-header">
+                <span class="ai-status-orb"></span>
+                <span class="holo-text">Mehran AI Assistant</span>
+                <button id="close-chat-window" class="close-btn">✖</button>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+                <div class="ai-message">Hello! I am the Mehran AI Assistant. How can I help you with your shopping today?</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-user-input" placeholder="Type your message..." autocomplete="off">
+                <button id="send-chat-btn" class="glow-on-hover">Send</button>
+            </div>
+        </div>
+        <button id="ai-chat-btn" class="ai-chat-trigger glow-on-hover">
+            <span class="ai-icon">🤖</span>
+            <span class="ai-notification-badge">1</span>
+            <span class="btn-text">Ask AI</span>
+        </button>
+    </div>
+
+    <!-- WhatsApp Floating Bubble -->
+    <a href="https://wa.me/923343457568" target="_blank" class="whatsapp-bubble">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="tooltip">Chat with us!</span>
+    </a>
+
+    <!-- Loading External Scripts -->
+    <script type="module" src="firebase-client.js"></script>
+    <script src="products.js" defer></script>
+    <script src="script.js" defer></script>
+</body>
+</html>
