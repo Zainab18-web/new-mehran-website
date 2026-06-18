@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehran Gifts - Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0b1120;
+            --card: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.08);
+            --accent: #38bdf8;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --pink: #ff00ea;
+            --red: #ef4444;
+            --purple: #a855f7;
+            --text: #f1f5f9;
+            --muted: #64748b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', sans-serif; -webkit-font-smoothing: antialiased; }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden;
+            background-image: radial-gradient(ellipse at 10% 20%, rgba(56,189,248,0.04) 0%, transparent 50%),
+                              radial-gradient(ellipse at 90% 80%, rgba(168,85,247,0.04) 0%, transparent 50%); }
+
+        /* ── HEADER ── */
+        header { display: flex; justify-content: space-between; align-items: center;
+            padding: 1.2rem 5%; border-bottom: 1px solid var(--border); position: sticky; top: 0;
+            background: rgba(11,17,32,0.9); backdrop-filter: blur(16px); z-index: 100; }
+        .logo-text { font-size: 1.6rem; font-weight: 800;
+            background: linear-gradient(45deg, var(--accent), var(--pink));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .header-right { display: flex; gap: 1rem; align-items: center; }
+        .btn-header { background: var(--card); border: 1px solid var(--border); color: var(--text);
+            padding: 7px 16px; border-radius: 20px; cursor: pointer; font-size: 0.85rem;
+            text-decoration: none; display: flex; align-items: center; gap: 0.4rem; transition: 0.2s; }
+        .btn-header:hover { border-color: var(--accent); color: var(--accent); }
+        .live-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%;
+            animation: livePulse 1.5s infinite; display: inline-block; }
+        @keyframes livePulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+
+        /* ── KPI STATS ── */
+        .kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; padding: 1.5rem 5% 0; }
+        .kpi-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+            padding: 1.4rem 1.5rem; position: relative; overflow: hidden; transition: 0.3s; }
+        .kpi-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.15); }
+        .kpi-card::after { content:''; position:absolute; top:0; left:0; width:100%; height:3px; }
+        .kpi-card.revenue::after { background: var(--green); }
+        .kpi-card.orders::after { background: var(--accent); }
+        .kpi-card.products::after { background: var(--yellow); }
+        .kpi-card.reviews::after { background: var(--pink); }
+        .kpi-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .kpi-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 700; }
+        .kpi-value { font-size: 2rem; font-weight: 800; margin: 0.2rem 0; line-height: 1; }
+        .kpi-sub { font-size: 0.78rem; color: var(--muted); }
+        .kpi-sub span { color: var(--green); font-weight: 600; }
+
+        /* ── ANALYTICS ROW ── */
+        .analytics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1rem 5% 0; }
+        .analytics-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.4rem; }
+        .analytics-title { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 1rem;
+            display: flex; align-items: center; gap: 0.5rem; }
+        .analytics-title i { color: var(--accent); }
+
+        /* Top Products */
+        .top-product-row { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
+        .tp-rank { width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.06);
+            display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800;
+            flex-shrink: 0; }
+        .tp-rank.gold { background: rgba(245,158,11,0.2); color: var(--yellow); }
+        .tp-rank.silver { background: rgba(148,163,184,0.2); color: #94a3b8; }
+        .tp-rank.bronze { background: rgba(180,120,60,0.2); color: #cd7f32; }
+        .tp-info { flex: 1; min-width: 0; }
+        .tp-name { font-size: 0.85rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .tp-cat { font-size: 0.72rem; color: var(--muted); }
+        .tp-bar-wrap { flex: 1; background: rgba(255,255,255,0.04); border-radius: 99px; height: 6px; }
+        .tp-bar { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), var(--purple)); transition: width 0.8s ease; }
+        .tp-qty { font-size: 0.8rem; font-weight: 700; color: var(--accent); white-space: nowrap; margin-left: 0.5rem; }
+
+        /* Revenue by status */
+        .status-stat-row { display: flex; justify-content: space-between; align-items: center;
+            padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+        .status-stat-row:last-child { border: none; }
+        .status-badge { padding: 3px 10px; border-radius: 99px; font-size: 0.72rem; font-weight: 700; }
+        .badge-pending { background: rgba(245,158,11,0.15); color: var(--yellow); }
+        .badge-processing { background: rgba(56,189,248,0.15); color: var(--accent); }
+        .badge-shipped { background: rgba(168,85,247,0.15); color: var(--purple); }
+        .badge-completed { background: rgba(16,185,129,0.15); color: var(--green); }
+        .badge-cancelled { background: rgba(239,68,68,0.15); color: var(--red); }
+        .status-rev { font-weight: 700; font-size: 0.9rem; }
+        .status-count { font-size: 0.75rem; color: var(--muted); }
+
+        /* ── TABS ── */
+        .tabs-row { display: flex; gap: 0.5rem; padding: 1.2rem 5% 0; flex-wrap: wrap; }
+        .tab-btn { background: none; border: 1px solid var(--border); color: var(--muted);
+            padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; font-weight: 600;
+            transition: 0.2s; display: flex; align-items: center; gap: 0.4rem; }
+        .tab-btn.active { background: rgba(56,189,248,0.1); border-color: var(--accent); color: var(--accent); }
+        .tab-btn:hover:not(.active) { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+        .tab-content { display: none; padding: 1rem 5% 6rem; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem; }
+        .panel-header h2 { font-size: 1.3rem; font-weight: 800; }
+
+        /* ── ORDERS ── */
+        .orders-list { display: flex; flex-direction: column; gap: 0.8rem; }
+        .order-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+            padding: 1.2rem 1.5rem; display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: start;
+            border-left: 4px solid var(--border); transition: 0.2s; }
+        .order-card:hover { border-color: rgba(56,189,248,0.2); }
+        .order-card.pending { border-left-color: var(--yellow); }
+        .order-card.processing { border-left-color: var(--accent); }
+        .order-card.shipped { border-left-color: var(--purple); }
+        .order-card.completed { border-left-color: var(--green); }
+        .order-card.cancelled { border-left-color: var(--red); }
+        .order-info h4 { font-size: 0.9rem; margin-bottom: 0.6rem; }
+        .order-info h4 small { font-family: monospace; color: var(--accent); font-size: 0.78rem; }
+        .order-info p { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.2rem; }
+        .order-info p strong { color: var(--text); }
+        .order-items-mini { font-size: 0.8rem; }
+        .order-items-mini ul { list-style: none; }
+        .order-items-mini li { display: flex; justify-content: space-between; padding: 0.25rem 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.05); color: #94a3b8; }
+        .order-items-mini li span:last-child { color: var(--text); font-weight: 600; }
+        .order-total-line { display: flex; justify-content: space-between; font-weight: 800;
+            margin-top: 0.5rem; padding-top: 0.4rem; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.9rem; }
+        .order-total-line span:last-child { color: var(--green); }
+        .order-actions { display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-end; }
+        .status-select { background: rgba(15,23,42,0.9); color: var(--text); border: 1px solid var(--border);
+            padding: 7px 12px; border-radius: 20px; outline: none; cursor: pointer; font-size: 0.82rem; }
+        .btn-danger { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #f87171;
+            padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
+        .btn-danger:hover { background: rgba(239,68,68,0.25); }
+
+        /* ── PRODUCTS ── */
+        .products-list { display: flex; flex-direction: column; gap: 0.7rem; }
+        .product-item { background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+            padding: 1rem 1.2rem; display: grid; grid-template-columns: 60px 1fr auto; gap: 1rem; align-items: center; }
+        .product-img-box { width: 56px; height: 56px; border-radius: 10px; overflow: hidden;
+            background: rgba(255,255,255,0.04); display: flex; align-items: center; justify-content: center; }
+        .product-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .product-item-info h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.2rem; }
+        .product-item-info .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+        .tag { font-size: 0.7rem; padding: 2px 8px; border-radius: 99px; background: rgba(255,255,255,0.06); color: var(--accent); }
+        .tag.sold { color: var(--green); background: rgba(16,185,129,0.08); }
+        .product-item-actions { display: flex; gap: 0.4rem; }
+        .btn-secondary { background: var(--card); border: 1px solid var(--border); color: var(--text);
+            padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
+        .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-primary { background: linear-gradient(45deg, var(--accent), #0284c7); color: white;
+            border: none; padding: 9px 18px; border-radius: 20px; font-weight: 700; cursor: pointer;
+            font-size: 0.85rem; transition: 0.2s; display: flex; align-items: center; gap: 0.4rem; }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(56,189,248,0.3); }
+
+        /* ── REVIEWS ── */
+        .reviews-list { display: flex; flex-direction: column; gap: 0.7rem; }
+        .review-item { background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+            padding: 1rem 1.2rem; display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center;
+            border-left: 4px solid var(--pink); }
+        .review-text p { font-size: 0.9rem; font-style: italic; margin-bottom: 0.4rem; }
+        .review-text small { color: var(--muted); font-size: 0.78rem; }
+
+        /* ── MODAL ── */
+        .modal { position: fixed; top:0;left:0;width:100%;height:100%; background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px); display:flex; align-items:center; justify-content:center;
+            z-index: 9999; opacity: 0; pointer-events: none; transition: 0.3s; padding: 1rem; }
+        .modal.active { opacity:1; pointer-events:all; }
+        .modal-content { background: rgba(15,23,42,0.98); border: 1px solid var(--border); border-radius: 20px;
+            padding: 2rem; width: 100%; max-width: 480px; position: relative; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from{transform:translateY(40px);opacity:0} to{transform:none;opacity:1} }
+        .modal-close { position:absolute; top:14px; right:18px; background:none; border:none; color:var(--muted);
+            font-size:1.4rem; cursor:pointer; }
+        .modal-content h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 1.4rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display:block; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.07em;
+            color:var(--muted); font-weight:700; margin-bottom: 0.4rem; }
+        .form-control { width:100%; padding:10px 14px; background:rgba(255,255,255,0.04);
+            border:1px solid var(--border); border-radius:10px; color:var(--text); font-size:0.9rem;
+            outline:none; font-family:inherit; transition:0.2s; }
+        .form-control:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(56,189,248,0.12); }
+
+        /* ── TOAST ── */
+        .toast { position:fixed; bottom:2rem; right:2rem; background:rgba(16,185,129,0.95); color:white;
+            padding:11px 22px; border-radius:30px; font-weight:700; font-size:0.88rem; z-index:11000;
+            opacity:0; transform:translateY(16px); transition:0.3s; pointer-events:none; }
+        .toast.show { opacity:1; transform:none; }
+
+        /* ── EMPTY STATE ── */
+        .empty-state { text-align:center; padding:3rem; color:var(--muted); font-size:0.95rem; }
+        .empty-state i { font-size:2.5rem; display:block; margin-bottom:0.8rem; opacity:0.4; }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:900px) {
+            .kpi-grid { grid-template-columns: 1fr 1fr; }
+            .analytics-grid { grid-template-columns: 1fr; }
+        }
+        @media(max-width:560px) {
+            header { flex-wrap:wrap; gap:0.8rem; }
+            .kpi-grid { grid-template-columns: 1fr 1fr; padding: 1rem 1rem 0; gap:0.7rem; }
+            .kpi-value { font-size:1.5rem; }
+            .tabs-row { padding:1rem 1rem 0; }
+            .tab-content { padding:1rem 1rem 6rem; }
+            .analytics-grid { padding:1rem 1rem 0; }
+            .order-card { grid-template-columns:1fr; }
+            .order-actions { align-items:flex-start; flex-direction:row; flex-wrap:wrap; }
+            .product-item { grid-template-columns:50px 1fr; }
+            .product-item-actions { grid-column:1/-1; }
+            .review-item { grid-template-columns:1fr; }
+        /* ── LOCK SCREEN ── */
+        .lock-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #0b1120; z-index: 10000; display: flex; align-items: center; justify-content: center;
+            background-image: radial-gradient(circle at center, #1e293b 0%, #0b1120 100%);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .lock-screen.hidden { opacity: 0; pointer-events: none; transform: scale(1.05); }
+        .lock-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px; padding: 3rem; text-align: center; width: 100%; max-width: 400px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            display: flex; flex-direction: column; gap: 1.5rem;
+        }
+        .lock-logo { font-size: 3rem; margin-bottom: 0.5rem; }
+        .lock-title { font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+        .lock-subtitle { font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
+        .lock-form { display: flex; flex-direction: column; gap: 1rem; }
+        .lock-input {
+            width: 100%; padding: 12px 16px; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border); border-radius: 12px; color: var(--text);
+            font-size: 1rem; outline: none; text-align: center; letter-spacing: 0.2em;
+            transition: 0.3s;
+        }
+        .lock-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15); }
+        .lock-btn {
+            background: linear-gradient(45deg, var(--accent), var(--pink));
+            color: white; border: none; padding: 12px; border-radius: 12px;
+            font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.3s;
+        }
+        .lock-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(56, 189, 248, 0.3); }
+        .lock-error { color: var(--red); font-size: 0.85rem; font-weight: 600; display: none; }
+    </style>
+</head>
+<body style="opacity: 0; transition: opacity 0.3s;">
+
+    <!-- LOCK SCREEN OVERLAY -->
+    <div id="lock-screen" class="lock-screen">
+        <div class="lock-card">
+            <div class="lock-logo">🔐</div>
+            <div class="lock-title">Admin Access</div>
+            <div class="lock-subtitle">Access is restricted. Enter your private passcode to manage Mehran Gifts.</div>
+            <form id="lock-form" class="lock-form">
+                <input type="password" id="passcode-input" class="lock-input" placeholder="••••••" required autocomplete="current-password">
+                <div id="lock-error" class="lock-error">❌ Invalid passcode. Access denied.</div>
+                <button type="submit" class="lock-btn">Unlock Portal</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo-text">🎁 Mehran Gifts</div>
+        <div class="header-right">
+            <span style="font-size:0.8rem; color:var(--muted); display:flex; align-items:center; gap:0.4rem;">
+                <span class="live-dot"></span> Live
+            </span>
+            <a href="index.html" class="btn-header"><i class="fa fa-store"></i> View Store</a>
+        </div>
+    </header>
+
+    <!-- KPI STATS -->
+    <div class="kpi-grid">
+        <div class="kpi-card revenue">
+            <div class="kpi-icon">💰</div>
+            <div class="kpi-label">Total Revenue</div>
+            <div class="kpi-value" id="stat-revenue">Rs 0</div>
+            <div class="kpi-sub">Excluding cancelled orders</div>
+        </div>
+        <div class="kpi-card orders">
+            <div class="kpi-icon">🛒</div>
+            <div class="kpi-label">Total Orders</div>
+            <div class="kpi-value" id="stat-orders">0</div>
+            <div class="kpi-sub" id="stat-pending-count">0 pending</div>
+        </div>
+        <div class="kpi-card products">
+            <div class="kpi-icon">🎈</div>
+            <div class="kpi-label">Products</div>
+            <div class="kpi-value" id="stat-products">0</div>
+            <div class="kpi-sub" id="stat-sold-count">0 types sold</div>
+        </div>
+        <div class="kpi-card reviews">
+            <div class="kpi-icon">⭐</div>
+            <div class="kpi-label">Reviews</div>
+            <div class="kpi-value" id="stat-reviews">0</div>
+            <div class="kpi-sub">Customer feedback</div>
+        </div>
+    </div>
+
+    <!-- ANALYTICS ROW -->
+    <div class="analytics-grid">
+
+        <!-- Top Selling Products -->
+        <div class="analytics-card">
+            <div class="analytics-title"><i class="fa fa-fire"></i> Top Selling Products</div>
+            <div id="top-products-list">
+                <div class="empty-state"><i class="fa fa-chart-bar"></i>Place some orders to see top sellers</div>
+            </div>
+        </div>
+
+        <!-- Revenue by Status -->
+        <div class="analytics-card">
+            <div class="analytics-title"><i class="fa fa-chart-pie"></i> Orders by Status</div>
+            <div id="status-breakdown">
+                <div class="empty-state"><i class="fa fa-inbox"></i>No orders yet</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs-row">
+        <button class="tab-btn active" data-tab="orders-tab"><i class="fa fa-receipt"></i> Orders Manager</button>
+        <button class="tab-btn" data-tab="products-tab"><i class="fa fa-boxes-stacked"></i> Products</button>
+        <button class="tab-btn" data-tab="reviews-tab"><i class="fa fa-star"></i> Reviews</button>
+    </div>
+
+    <!-- ORDERS TAB -->
+    <div class="tab-content active" id="orders-tab">
+        <div class="panel-header">
+            <h2>📦 Customer Orders</h2>
+            <span id="orders-count-label" style="font-size:0.85rem;color:var(--muted);">Loading...</span>
+        </div>
+        <div class="orders-list" id="orders-list">
+            <div class="empty-state"><i class="fa fa-hourglass"></i>Loading orders...</div>
+        </div>
+    </div>
+
+    <!-- PRODUCTS TAB -->
+    <div class="tab-content" id="products-tab">
+        <div class="panel-header">
+            <h2>🎁 Product Catalog</h2>
+            <button class="btn-primary" id="add-product-btn"><i class="fa fa-plus"></i> Add Product</button>
+        </div>
+        <div class="products-list" id="products-list">
+            <div class="empty-state"><i class="fa fa-hourglass"></i>Loading catalog...</div>
+        </div>
+    </div>
+
+    <!-- REVIEWS TAB -->
+    <div class="tab-content" id="reviews-tab">
+        <div class="panel-header">
+            <h2>⭐ Reviews & Feedback</h2>
+            <span style="font-size:0.85rem;color:var(--muted);">Moderate customer reviews</span>
+        </div>
+        <div class="reviews-list" id="reviews-list">
+            <div class="empty-state"><i class="fa fa-hourglass"></i>Loading reviews...</div>
+        </div>
+    </div>
+
+    <!-- PRODUCT MODAL -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h3 id="modal-title">Add Product</h3>
+            <form id="product-form">
+                <input type="hidden" id="edit-product-id">
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="prod-name" class="form-control" required placeholder="e.g. Red Balloon Pack">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="prod-category" class="form-control" style="background:var(--bg)">
+                        <option value="Balloons">🎈 Balloons</option>
+                        <option value="Birthday Sets">🎉 Birthday Sets</option>
+                        <option value="Candles">🕯️ Candles</option>
+                        <option value="Cake Toppers">🎂 Cake Toppers</option>
+                        <option value="Gifts">🎁 Gifts</option>
+                        <option value="Decor & Others">✨ Decor & Others</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Price (PKR)</label>
+                    <input type="number" id="prod-price" class="form-control" required min="1" placeholder="e.g. 350">
+                </div>
+                <div class="form-group">
+                    <label>Image Filename</label>
+                    <input type="text" id="prod-image" class="form-control" required placeholder="e.g. snow_spray.jpeg">
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%;justify-content:center;padding:12px;margin-top:0.5rem;">
+                    <i class="fa fa-save"></i> Save Product
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast-notify">✅ Done!</div>
+
+    <script type="module" src="firebase-client.js"></script>
+    <script src="products.js"></script>
+    <script src="admin.js" defer></script>
+</body>
+</html>
