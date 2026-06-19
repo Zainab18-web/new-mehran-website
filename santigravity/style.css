@@ -594,12 +594,18 @@ header {
 /* Hide Google Translate Default UI (Banner & Tooltips) natively */
 iframe.goog-te-banner-frame,
 .goog-te-banner-frame,
+iframe.skiptranslate,
+.skiptranslate,
+body > .skiptranslate,
 .VIpgJd-Zvi9od-aZ2wEe-wOHMyf,
 .VIpgJd-Zvi9od-ORHb-OEVmcd,
+.VIpgJd-y66Zs-yPPtC-AzPlBc-Hn1g5-IEtC6e,
+.VIpgJd-Zvi9od-l4eHX-hSRGPd,
 .goog-te-gadget-icon,
 .goog-te-gadget-simple {
     display: none !important;
     visibility: hidden !important;
+    opacity: 0 !important;
 }
 
 body {
