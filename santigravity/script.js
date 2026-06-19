@@ -405,11 +405,14 @@ function renderWebsiteReviews() {
     grid.innerHTML = '';
     websiteReviews.forEach(r => {
         const reviewCard = document.createElement('div');
-        reviewCard.className = 'glass-panel';
-        reviewCard.style.padding = '1.5rem';
-        reviewCard.style.borderRadius = '16px';
-        reviewCard.style.marginBottom = '1rem';
-        reviewCard.innerHTML = `<h4>${r.name} <span style="font-size:0.8em; font-weight:normal">${r.stars}</span></h4><p style="margin-top:0.5rem;color:#cbd5e1;">"${r.text}"</p>`;
+        reviewCard.className = 'review-card glass-panel';
+        reviewCard.innerHTML = `
+            <div class="review-header">
+                <span class="reviewer-name">${r.name}</span>
+                <span class="review-rating">${r.stars}</span>
+            </div>
+            <p style="margin-top:0.5rem;color:#cbd5e1;">"${r.text}"</p>
+        `;
         grid.appendChild(reviewCard);
     });
 }
