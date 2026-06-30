@@ -406,5 +406,61 @@
     <script type="module" src="firebase-client.js"></script>
     <script src="products.js"></script>
     <script src="admin.js" defer></script>
+
+    <!-- ═══ ADMIN LOCK SCREEN ═══ -->
+    <script>
+        (function () {
+            // ⚠️ Sirf yahan password change karo
+            const ADMIN_PASSWORD = "MehranGifts@2026";
+            const SESSION_KEY    = "mehran_admin_unlocked";
+
+            const lockScreen = document.getElementById("lock-screen");
+            const lockForm   = document.getElementById("lock-form");
+            const lockError  = document.getElementById("lock-error");
+            const body       = document.body;
+
+            // If already unlocked this session, hide lock screen
+            if (sessionStorage.getItem(SESSION_KEY) === "true") {
+                lockScreen.classList.add("hidden");
+                body.style.opacity = "1";
+            } else {
+                body.style.opacity = "1"; // Show lock screen, body visible
+            }
+
+            lockForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const entered = document.getElementById("passcode-input").value;
+
+                if (entered === ADMIN_PASSWORD) {
+                    sessionStorage.setItem(SESSION_KEY, "true");
+                    lockScreen.classList.add("hidden");
+                    lockError.style.display = "none";
+                } else {
+                    lockError.style.display = "block";
+                    document.getElementById("passcode-input").value = "";
+                    document.getElementById("passcode-input").focus();
+
+                    // Shake animation on wrong password
+                    const card = document.querySelector(".lock-card");
+                    card.style.animation = "none";
+                    card.offsetHeight; // reflow
+                    card.style.animation = "shake 0.4s ease";
+                }
+            });
+
+            // Shake animation style
+            const style = document.createElement("style");
+            style.textContent = `
+                @keyframes shake {
+                    0%,100%{transform:translateX(0)}
+                    20%{transform:translateX(-10px)}
+                    40%{transform:translateX(10px)}
+                    60%{transform:translateX(-8px)}
+                    80%{transform:translateX(8px)}
+                }
+            `;
+            document.head.appendChild(style);
+        })();
+    </script>
 </body>
 </html>
