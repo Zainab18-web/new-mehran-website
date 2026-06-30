@@ -211,6 +211,7 @@
             .product-item { grid-template-columns:50px 1fr; }
             .product-item-actions { grid-column:1/-1; }
             .review-item { grid-template-columns:1fr; }
+        }
         /* ── LOCK SCREEN ── */
         .lock-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -247,7 +248,7 @@
         .lock-error { color: var(--red); font-size: 0.85rem; font-weight: 600; display: none; }
     </style>
 </head>
-<body style="opacity: 0; transition: opacity 0.3s;">
+<body>
 
     <!-- LOCK SCREEN OVERLAY -->
     <div id="lock-screen" class="lock-screen">
@@ -263,6 +264,8 @@
         </div>
     </div>
 
+    <!-- DASHBOARD (hidden until unlocked) -->
+    <div id="dashboard-wrapper" style="display:none;">
     <!-- HEADER -->
     <header>
         <div class="logo-text">🎁 Mehran Gifts</div>
@@ -402,8 +405,68 @@
     <!-- TOAST -->
     <div class="toast" id="toast-notify">✅ Done!</div>
 
+    </div> <!-- end dashboard-wrapper -->
     <script type="module" src="firebase-client.js"></script>
     <script src="products.js"></script>
     <script src="admin.js" defer></script>
+
+    <!-- ═══ ADMIN LOCK SCREEN ═══ -->
+    <script>
+        (function () {
+            // ⚠️ Sirf yahan password change karo
+            const ADMIN_PASSWORD = "MehranGifts@2026";
+            const SESSION_KEY    = "mehran_admin_unlocked";
+
+            const lockScreen      = document.getElementById("lock-screen");
+            const lockForm        = document.getElementById("lock-form");
+            const lockError       = document.getElementById("lock-error");
+            const dashboardWrapper = document.getElementById("dashboard-wrapper");
+
+            function unlock() {
+                sessionStorage.setItem(SESSION_KEY, "true");
+                lockScreen.style.display    = "none";
+                dashboardWrapper.style.display = "block";
+            }
+
+            // Already unlocked this session?
+            if (sessionStorage.getItem(SESSION_KEY) === "true") {
+                unlock();
+            }
+            // Otherwise lock screen is visible, dashboard stays hidden (display:none)
+
+            lockForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const entered = document.getElementById("passcode-input").value;
+
+                if (entered === ADMIN_PASSWORD) {
+                    lockError.style.display = "none";
+                    unlock();
+                } else {
+                    lockError.style.display = "block";
+                    document.getElementById("passcode-input").value = "";
+                    document.getElementById("passcode-input").focus();
+
+                    // Shake animation on wrong password
+                    const card = document.querySelector(".lock-card");
+                    card.style.animation = "none";
+                    card.offsetHeight;
+                    card.style.animation = "shake 0.4s ease";
+                }
+            });
+
+            // Shake animation
+            const style = document.createElement("style");
+            style.textContent = `
+                @keyframes shake {
+                    0%,100%{transform:translateX(0)}
+                    20%{transform:translateX(-10px)}
+                    40%{transform:translateX(10px)}
+                    60%{transform:translateX(-8px)}
+                    80%{transform:translateX(8px)}
+                }
+            `;
+            document.head.appendChild(style);
+        })();
+    </script>
 </body>
 </html>

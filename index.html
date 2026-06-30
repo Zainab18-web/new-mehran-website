@@ -3,9 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mehran Gift Items And Decor Shop</title>
+
+    <!-- ═══ SEO ══════════════════════════════════════════════════ -->
+    <title>Mehran Gift Items And Decor Shop | Gifts & Home Decor Pakistan</title>
+    <meta name="description" content="Shop unique gifts, balloons, candles, cake toppers and home decor at Mehran Gift Shop. Fast delivery across Pakistan via Bykea, TCS and Leopards. Order online now!">
+    <meta name="keywords" content="gift shop Pakistan, home decor Pakistan, balloons, candles, cake toppers, gift sets, Mehran gifts, online gift shop Karachi, birthday gifts Pakistan">
+    <meta name="author" content="Zainab Sultan, Sultan Hussain">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://mehrangiftshopandhomedecors.netlify.app/">
+
+    <!-- ═══ Open Graph (WhatsApp / Facebook sharing) ═════════════ -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Mehran Gift Items And Decor Shop">
+    <meta property="og:description" content="Unique gifts, balloons, candles, cake toppers & home decor. Order online — delivery across Pakistan!">
+    <meta property="og:url" content="https://mehrangiftshopandhomedecors.netlify.app/">
+    <meta property="og:image" content="https://mehrangiftshopandhomedecors.netlify.app/images/happy_birthday_balloon_set.jpeg">
+    <meta property="og:locale" content="en_PK">
+    <meta property="og:site_name" content="Mehran Gift Shop">
+
+    <!-- ═══ Twitter Card ══════════════════════════════════════════ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mehran Gift Items And Decor Shop">
+    <meta name="twitter:description" content="Unique gifts & home decor. Fast delivery across Pakistan!">
+    <meta name="twitter:image" content="https://mehrangiftshopandhomedecors.netlify.app/images/happy_birthday_balloon_set.jpeg">
+
+    <!-- ═══ Schema Markup ════════════════════════════════════════ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "GiftShop",
+      "name": "Mehran Gift Items And Decor Shop",
+      "description": "Unique gifts, balloons, candles, cake toppers and home decor items with delivery across Pakistan.",
+      "url": "https://mehrangiftshopandhomedecors.netlify.app/",
+      "telephone": "+923343457568",
+      "priceRange": "Rs",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+923343457568",
+        "contactType": "customer service",
+        "availableLanguage": ["English", "Urdu"]
+      },
+      "sameAs": ["https://wa.me/923343457568"]
+    }
+    </script>
+    <!-- ══════════════════════════════════════════════════════════ -->
+
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts for Modern Look -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -64,7 +107,7 @@
                         <strong id="tracking-order-price" style="color: #38bdf8;">Rs 0</strong>
                     </div>
                     <p style="font-size: 0.95rem; color: #cbd5e1; text-align: center; margin-top: 0.8rem; line-height: 1.5;">
-                        We will contact you on your mobile number to confirm payment and dispatch details. 
+                        We will contact you on your mobile number to confirm payment and dispatch details.
                     </p>
                     <button id="clear-tracking-btn" class="glow-on-hover" style="margin-top: 0.5rem; padding: 0.5rem; font-size: 0.85rem; width: 100%;">Clear Tracking Info</button>
                 </div>
@@ -107,7 +150,7 @@
         <!-- Products Section -->
         <div id="products-view" class="page-view hidden">
             <h2 class="section-title text-center holo-text">Explore Our Products</h2>
-            
+
             <!-- Filter Bar -->
             <div class="filter-bar glass-panel">
                 <input type="text" id="product-search" placeholder="Search products..." class="search-input">
@@ -124,7 +167,7 @@
 
             <section id="products-grid" class="products-grid"></section>
         </div>
-        
+
         <!-- About Section -->
         <div id="about-view" class="page-view hidden">
             <section id="about-us" class="about-section glass-panel">
@@ -165,7 +208,7 @@
         </div>
     </footer>
 
-    <!-- Google Translate (Hidden UI for native text conversion) -->
+    <!-- Google Translate (Hidden UI) -->
     <div id="google_translate_element" style="display:none;"></div>
     <script type="text/javascript">
       function googleTranslateElementInit() {
@@ -185,14 +228,11 @@
         </div>
     </div>
 
-    <!-- Checkout Modal (LUMIÈRE-style redesign) -->
+    <!-- Checkout Modal -->
     <div id="checkout-modal" class="checkout-modal hidden">
         <div class="checkout-wrapper glass-panel">
-
-            <!-- Close Button -->
             <button id="close-checkout" class="close-btn">✖</button>
 
-            <!-- Progress Bar -->
             <nav class="co-progress">
                 <div class="co-step done">
                     <div class="co-circle">✓</div>
@@ -210,14 +250,10 @@
                 </div>
             </nav>
 
-            <!-- Two-column layout -->
             <div class="co-body">
-
-                <!-- LEFT: Shipping Form -->
                 <section class="co-form-col">
                     <h2 class="co-heading">Shipping Details</h2>
                     <form id="checkout-form" class="co-form">
-
                         <div class="input-group">
                             <label>Full Name</label>
                             <input type="text" id="checkout-name" required placeholder="Your full name">
@@ -230,35 +266,26 @@
                             <label>Shipping Address</label>
                             <textarea id="checkout-address" required placeholder="Street, City, Postal code…" rows="3"></textarea>
                         </div>
-
                         <div class="input-group">
                             <label>Payment Method</label>
                             <select required id="payment-method" class="futuristic-select dark-select">
                                 <option value="easypaisa">💚 EasyPaisa</option>
                             </select>
                         </div>
-
-                        <!-- Payment Account Instructions Panel -->
-                        <div id="payment-instructions" class="co-delivery-note" style="margin-top: 1rem; border-color: rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.08);">
-                            <!-- Will be updated dynamically via Javascript -->
-                        </div>
-
+                        <div id="payment-instructions" class="co-delivery-note" style="margin-top: 1rem; border-color: rgba(56, 189, 248, 0.3); background: rgba(56, 189, 248, 0.08);"></div>
                         <div class="co-delivery-note">
                             🚚 Delivered via <strong>Bykea / TCS / Leopards</strong>.<br>
                             <span style="color:#38bdf8;">Delivery charges paid to rider on receipt.</span>
                         </div>
-
                         <button type="submit" class="glow-on-hover checkout-submit" id="co-submit-btn">
                             ✅ Confirm Order &amp; Pay
                         </button>
                     </form>
                 </section>
 
-                <!-- RIGHT: Order Summary -->
                 <aside class="co-summary-col">
                     <h3 class="co-summary-title">Order Summary</h3>
                     <div id="co-cart-items-list" class="co-items-list"></div>
-
                     <div class="co-totals">
                         <div class="co-total-row">
                             <span>Subtotal</span>
@@ -273,12 +300,10 @@
                             <span id="checkout-total">Rs 0</span>
                         </div>
                     </div>
-
                     <p class="co-secure">🔒 Secure Checkout</p>
                 </aside>
             </div>
 
-            <!-- Success Screen -->
             <div id="order-success" class="order-success hidden">
                 <div class="success-icon">✅</div>
                 <h2>Order Placed!</h2>
@@ -357,7 +382,7 @@
         <span class="tooltip">Chat with us!</span>
     </a>
 
-    <!-- Loading External Scripts -->
+    <!-- Loading External Scripts (unchanged) -->
     <script type="module" src="firebase-client.js"></script>
     <script src="products.js" defer></script>
     <script src="script.js" defer></script>
